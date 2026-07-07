@@ -1,0 +1,6 @@
+{"time": "2026-07-07 09:32:32,183", "level": "DEBUG", "name": "logging_config", "message": "The current size of consumming memory 8856"}
+{"time": "2026-07-07 09:32:34,027", "level": "DEBUG", "name": "logging_config", "message": "The Storage Increasing to => 8856"}
+{"time": "2026-07-07 09:32:48,280", "level": "DEBUG", "name": "logging_config", "message": "The current size of consumming memory 16184"}
+{"time": "2026-07-07 09:32:50,377", "level": "DEBUG", "name": "logging_config", "message": "The Storage Increasing to => 16184"}
+{"time": "2026-07-07 09:32:51,952", "level": "DEBUG", "name": "logging_config", "message": "The current size of consumming memory 26040"}
+{"time": "2026-07-07 09:33:24,163", "level": "DEBUG", "name": "logging_config", "message": "The Storage Increasing to => 26040"}

@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+from logging_config import logger_root
 import sys
 
 # Globale Variable to simuliate the leak storage
@@ -12,11 +13,13 @@ app = FastAPI()
 def get_leak_memory() -> None:
     # Acces the global Variable
     global LEAK_STORAGE
+    storage_gb = sys.getsizeof(LEAK_STORAGE) / 1024**3
+    storage = round(storage_gb, 2)
+    logger_root.debug(f"The current size of consumming memory {storage}")
     # Increase storage of RAM
     for _ in range(100):
         LEAK_STORAGE.append(bytearray(b"mahdi") * 1000000)
-    # Get the current size
-    print(sys.getsizeof(LEAK_STORAGE))
+    logger_root.debug(f"The Storage Increasing to => {storage}")
 
 
 
