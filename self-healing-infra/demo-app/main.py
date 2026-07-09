@@ -10,7 +10,7 @@ app = FastAPI()
 
 # endpoint of Memory Leak
 @app.get("/leak")
-def get_leak_memory() -> None:
+async def get_leak_memory() -> None:
     # Acces the global Variable
     global LEAK_STORAGE
     storage_gb = sys.getsizeof(LEAK_STORAGE) / 1024**3
@@ -25,7 +25,7 @@ def get_leak_memory() -> None:
 
 # endpoint of heavly CPU usage
 @app.get("/slow-query")
-def heavly_query() -> None:
+async def heavly_query() -> None:
     def fibonacci(n):
         if n <= 0:
             return 0
