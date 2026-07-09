@@ -34,5 +34,3 @@ def heavly_query() -> None:
         return fibonacci(n-1) + fibonacci(n-2)
         
     fibonacci(10)
-
-
