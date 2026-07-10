@@ -1,4 +1,12 @@
-{"time": "2026-07-10 17:03:25,239", "level": "INFO", "name": "logging_config", "message": "The current size of consumming memory: 56"}
-{"time": "2026-07-10 17:03:25,581", "level": "DEBUG", "name": "logging_config", "message": "The Storage Increasing to => 920"}
-{"time": "2026-07-10 17:03:47,787", "level": "INFO", "name": "logging_config", "message": "The current size of consumming memory: 920"}
-{"time": "2026-07-10 17:03:48,189", "level": "DEBUG", "name": "logging_config", "message": "The Storage Increasing to => 1656"}
+FastAPI Appication Process Starting Up
+Memory threshold diagnostic check | Current Ram Usage : 44.16 MB
+Memory leakage progression Tracked | Update RMA Value: 521.12 MD
+Memory threshold diagnostic check | Current Ram Usage : 521.20 MB
+Memory leakage progression Tracked | Update RMA Value: 998.16 MD
+FastAPI Application Tearing Down
+FastAPI Application Process Starting Up
+Initiating highly intensive CPU-bound Computation Pipeline
+CPU Computation Finished. Result Generated Succefully
+Initiating highly intensive CPU-bound Computation Pipeline
+CPU Computation Finished. Result Generated Succefully
+FastAPI Application Tearing Down
