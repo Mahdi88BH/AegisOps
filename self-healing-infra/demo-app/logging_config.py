@@ -22,10 +22,10 @@ LOGGING_CONFIG = {
         "file": {
             "level": "DEBUG",
             "formatter": "json",
-            "class": "logging.FileHandler",
+            "class": "logging.handlers.RotatingFileHandler",
             "filename": "production.log",
-            # "maxBytes": 10485760,
-            # "backupCount": 5,
+            "maxBytes": 10485760,
+            "backupCount": 5,
             "encoding": "utf8"
         }
     },

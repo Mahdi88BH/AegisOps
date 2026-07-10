@@ -11,15 +11,21 @@ app = FastAPI()
 # endpoint of Memory Leak
 @app.get("/leak")
 async def get_leak_memory() -> None:
+
     # Acces the global Variable
     global LEAK_STORAGE
-    storage_gb = sys.getsizeof(LEAK_STORAGE) / 1024**3
-    storage = round(storage_gb, 2)
-    logger_root.info(f"The current size of consumming memory {storage}")
+
+    # Converte The Storage Value From Bytes To Gigabytes
+    # storage_gb = sys.getsizeof(LEAK_STORAGE) / 1024**3
+    # storage = round(storage_gb, 2)
+    
+    logger_root.info(f"The current size of consumming memory: {sys.getsizeof(LEAK_STORAGE)}")
+    
     # Increase storage of RAM
     for _ in range(100):
         LEAK_STORAGE.append(bytearray(b"mahdi") * 1000000)
-    logger_root.debug(f"The Storage Increasing to => {storage}")
+    
+    logger_root.debug(f"The Storage Increasing to => {sys.getsizeof(LEAK_STORAGE)}")
 
 
 
