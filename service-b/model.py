@@ -40,13 +40,11 @@ class AnomalyDetector:
 
     def predict(self, cpu_usage: float, disk_bytes: float):
         raw_data = np.array([[cpu_usage, disk_bytes]])
-        
         scaled_data = self.scaler.transform(raw_data)[0] 
-        
         self.sequence_buffer.append(scaled_data)
         if len(self.sequence_buffer) < 10:
             return False, 0.0
-            
+  
         sequence_array = np.array(self.sequence_buffer).flatten()
         
         input_tensor = torch.tensor(sequence_array, dtype=torch.float32).unsqueeze(0).to(self.device)
