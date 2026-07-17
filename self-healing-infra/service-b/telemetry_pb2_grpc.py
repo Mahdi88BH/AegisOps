@@ -3,7 +3,7 @@
 import grpc
 import warnings
 
-from protobuf import telemetry_pb2 as protobuf_dot_telemetry__pb2
+import telemetry_pb2 as protobuf_dot_telemetry__pb2
 
 GRPC_GENERATED_VERSION = '1.82.1'
 GRPC_VERSION = grpc.__version__

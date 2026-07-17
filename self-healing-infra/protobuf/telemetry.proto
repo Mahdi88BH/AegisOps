@@ -4,18 +4,18 @@ package telemetry ;
 
 
 message MetricPayload {
-    string container_id =1;
-    float cpu_usage = 2;
-    float ram_usage =3;
-    float memory_usage=4;
-    int64 timestamp = 5;
+    //string container_id =1;
+    float cpu_usage = 1;
+    float ram_usage =2;
+    float memory_usage=3;
+    int64 timestamp = 4;
 }
 
 message LogPayload {
-    string container_id = 1;
-    string log_level = 2;         //"INFO ,ERROR"
-    string message = 3;
-    int64 timestamp = 4;
+    //string container_id = 1;
+    string log_level = 1;         //"INFO ,ERROR"
+    string message = 2;
+    int64 timestamp = 3;
 }
 
 message AnomalyResponse {

@@ -24,7 +24,7 @@ _sym_db = _symbol_database.Default()
 
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x18protobuf/telemetry.proto\x12\ttelemetry\"t\n\rMetricPayload\x12\x14\n\x0c\x63ontainer_id\x18\x01 \x01(\t\x12\x11\n\tcpu_usage\x18\x02 \x01(\x02\x12\x11\n\tram_usage\x18\x03 \x01(\x02\x12\x14\n\x0cmemory_usage\x18\x04 \x01(\x02\x12\x11\n\ttimestamp\x18\x05 \x01(\x03\"Y\n\nLogPayload\x12\x14\n\x0c\x63ontainer_id\x18\x01 \x01(\t\x12\x11\n\tlog_level\x18\x02 \x01(\t\x12\x0f\n\x07message\x18\x03 \x01(\t\x12\x11\n\ttimestamp\x18\x04 \x01(\x03\"a\n\x0f\x41nomalyResponse\x12\x12\n\nis_anomaly\x18\x01 \x01(\x08\x12\x15\n\ranomaly_score\x18\x02 \x01(\x02\x12\x13\n\x0b\x64\x65scription\x18\x03 \x01(\t\x12\x0e\n\x06\x61\x63tion\x18\x04 \x01(\t2\x9f\x01\n\x0f\x41nomalyDetector\x12I\n\rStreamMetrics\x12\x18.telemetry.MetricPayload\x1a\x1a.telemetry.AnomalyResponse(\x01\x30\x01\x12\x41\n\nAnalyzeLog\x12\x15.telemetry.LogPayload\x1a\x18.telemetry.MetricPayload(\x01\x30\x01\x62\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x18protobuf/telemetry.proto\x12\ttelemetry\"^\n\rMetricPayload\x12\x11\n\tcpu_usage\x18\x01 \x01(\x02\x12\x11\n\tram_usage\x18\x02 \x01(\x02\x12\x14\n\x0cmemory_usage\x18\x03 \x01(\x02\x12\x11\n\ttimestamp\x18\x04 \x01(\x03\"C\n\nLogPayload\x12\x11\n\tlog_level\x18\x01 \x01(\t\x12\x0f\n\x07message\x18\x02 \x01(\t\x12\x11\n\ttimestamp\x18\x03 \x01(\x03\"a\n\x0f\x41nomalyResponse\x12\x12\n\nis_anomaly\x18\x01 \x01(\x08\x12\x15\n\ranomaly_score\x18\x02 \x01(\x02\x12\x13\n\x0b\x64\x65scription\x18\x03 \x01(\t\x12\x0e\n\x06\x61\x63tion\x18\x04 \x01(\t2\x9f\x01\n\x0f\x41nomalyDetector\x12I\n\rStreamMetrics\x12\x18.telemetry.MetricPayload\x1a\x1a.telemetry.AnomalyResponse(\x01\x30\x01\x12\x41\n\nAnalyzeLog\x12\x15.telemetry.LogPayload\x1a\x18.telemetry.MetricPayload(\x01\x30\x01\x62\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
@@ -32,11 +32,11 @@ _builder.BuildTopDescriptorsAndMessages(DESCRIPTOR, 'protobuf.telemetry_pb2', _g
 if not _descriptor._USE_C_DESCRIPTORS:
   DESCRIPTOR._loaded_options = None
   _globals['_METRICPAYLOAD']._serialized_start=39
-  _globals['_METRICPAYLOAD']._serialized_end=155
-  _globals['_LOGPAYLOAD']._serialized_start=157
-  _globals['_LOGPAYLOAD']._serialized_end=246
-  _globals['_ANOMALYRESPONSE']._serialized_start=248
-  _globals['_ANOMALYRESPONSE']._serialized_end=345
-  _globals['_ANOMALYDETECTOR']._serialized_start=348
-  _globals['_ANOMALYDETECTOR']._serialized_end=507
+  _globals['_METRICPAYLOAD']._serialized_end=133
+  _globals['_LOGPAYLOAD']._serialized_start=135
+  _globals['_LOGPAYLOAD']._serialized_end=202
+  _globals['_ANOMALYRESPONSE']._serialized_start=204
+  _globals['_ANOMALYRESPONSE']._serialized_end=301
+  _globals['_ANOMALYDETECTOR']._serialized_start=304
+  _globals['_ANOMALYDETECTOR']._serialized_end=463
 # @@protoc_insertion_point(module_scope)
