@@ -57,6 +57,10 @@ async def get_leak_memory() -> dict:
 async def heavly_query() -> dict:
     logger.info("Initiating highly intensive CPU-bound Computation Pipeline")
 
+    process = psutil.Process()
+    # Call cpu_percent once to set a baseline measurement point
+    process.cpu_percent(interval=None)
+
     def fibonacci(n):
         if n <= 0: return 0
         if n == 1: return 1
@@ -64,6 +68,10 @@ async def heavly_query() -> dict:
         
     result = fibonacci(10)
 
-    logger.info("CPU Computation Finished. Result Generated Succefully")
+    # Measure total CPU usage across system or current process
+    process_cpu = process.cpu_percent(interval=None)
+    system_cpu = psutil.cpu_percent(interval=None)
+
+    logger.info(f"Process CPU Usage: {process_cpu}% | Overall System CPU: {system_cpu}%")
 
     return {"result": result}

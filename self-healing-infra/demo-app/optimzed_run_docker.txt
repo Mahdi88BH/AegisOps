@@ -1,0 +1,6 @@
+docker run -d \
+  --name my-monitoring-app \
+  --cpus="1.0" \
+  --memory="2g" \
+  -p 8000:8000 \
+  my-app-image
