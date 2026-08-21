@@ -1,31 +1,35 @@
 syntax = "proto3";
-
 package telemetry ;
 
+enum StatutAction {
+  PASS = 0;
+  RESTART_CONTAINER  = 1;
+  
+}
 
 message MetricPayload {
-    //string container_id =1;
-    float cpu_usage = 1;
-    float ram_usage =2;
-    float memory_usage=3;
-    int64 timestamp = 4;
+    string container_id =1;
+    double cpu_usage = 2;
+    double ram_usage =3;
+    double memory_usage=4;
+    int64 timestamp = 5; // millisecondes
 }
 
 message LogPayload {
-    //string container_id = 1;
-    string log_level = 1;         //"INFO ,ERROR"
-    string message = 2;
-    int64 timestamp = 3;
+    string container_id = 1;
+    string log_level = 2;         //"INFO ,ERROR"
+    string message = 3;
+    int64 timestamp = 4;
 }
 
 message AnomalyResponse {
     bool is_anomaly=1;
     float anomaly_score=2;
     string description=3;
-    string action =4; //"BLOCK ,PASS ,RESTART_CONTAINER"
+    StatutAction action =4; 
 }
 
 service AnomalyDetector{
     rpc  StreamMetrics (stream MetricPayload) returns (stream AnomalyResponse);
-    rpc AnalyzeLog (stream LogPayload) returns (stream MetricPayload);
+    rpc AnalyzeLog (stream LogPayload) returns (stream AnomalyResponse);
 }

@@ -3,7 +3,7 @@ import torch
 import torch.nn as nn
 import numpy as np
 import joblib
-from collections import deque
+from collections import defaultdict, deque
 
 class MultivariateAutoencoder(nn.Module):
     def __init__(self):
@@ -36,16 +36,23 @@ class AnomalyDetector:
         self.model.load_state_dict(torch.load(model_path, map_location=self.device))
         self.model.eval() 
         self.threshold = threshold
-        self.sequence_buffer = deque(maxlen=10)
+        self.sequence_buffers = defaultdict(lambda: deque(maxlen=10))
 
-    def predict(self, cpu_usage: float, ram_usage: float, disk_bytes: float):
+    def predict(
+        self,
+        cpu_usage: float,
+        ram_usage: float,
+        disk_bytes: float,
+        container_id: str = "",
+    ):
         current_data = np.array([cpu_usage, ram_usage, disk_bytes])
-        self.sequence_buffer.append(current_data)
-        
-        if len(self.sequence_buffer) < 10:
+        sequence_buffer = self.sequence_buffers[container_id]
+        sequence_buffer.append(current_data)
+
+        if len(sequence_buffer) < 10:
             return False, 0.0
-  
-        sequence_array = np.array(self.sequence_buffer).flatten()
+
+        sequence_array = np.array(sequence_buffer).flatten()
         
         input_tensor = torch.tensor(sequence_array, dtype=torch.float32).unsqueeze(0).to(self.device)
         

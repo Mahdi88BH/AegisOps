@@ -3,9 +3,9 @@
 import grpc
 import warnings
 
-from protobuf import telemetry_pb2 as protobuf_dot_telemetry__pb2
+import telemetry_pb2 as telemetry__pb2
 
-GRPC_GENERATED_VERSION = '1.82.1'
+GRPC_GENERATED_VERSION = '1.74.0'
 GRPC_VERSION = grpc.__version__
 _version_not_supported = False
 
@@ -18,14 +18,14 @@ except ImportError:
 if _version_not_supported:
     raise RuntimeError(
         f'The grpc package installed is at version {GRPC_VERSION},'
-        + ' but the generated code in protobuf/telemetry_pb2_grpc.py depends on'
+        + f' but the generated code in telemetry_pb2_grpc.py depends on'
         + f' grpcio>={GRPC_GENERATED_VERSION}.'
         + f' Please upgrade your grpc module to grpcio>={GRPC_GENERATED_VERSION}'
         + f' or downgrade your generated code using grpcio-tools<={GRPC_VERSION}.'
     )
 
 
-class AnomalyDetectorStub:
+class AnomalyDetectorStub(object):
     """Missing associated documentation comment in .proto file."""
 
     def __init__(self, channel):
@@ -36,17 +36,17 @@ class AnomalyDetectorStub:
         """
         self.StreamMetrics = channel.stream_stream(
                 '/telemetry.AnomalyDetector/StreamMetrics',
-                request_serializer=protobuf_dot_telemetry__pb2.MetricPayload.SerializeToString,
-                response_deserializer=protobuf_dot_telemetry__pb2.AnomalyResponse.FromString,
+                request_serializer=telemetry__pb2.MetricPayload.SerializeToString,
+                response_deserializer=telemetry__pb2.AnomalyResponse.FromString,
                 _registered_method=True)
         self.AnalyzeLog = channel.stream_stream(
                 '/telemetry.AnomalyDetector/AnalyzeLog',
-                request_serializer=protobuf_dot_telemetry__pb2.LogPayload.SerializeToString,
-                response_deserializer=protobuf_dot_telemetry__pb2.MetricPayload.FromString,
+                request_serializer=telemetry__pb2.LogPayload.SerializeToString,
+                response_deserializer=telemetry__pb2.AnomalyResponse.FromString,
                 _registered_method=True)
 
 
-class AnomalyDetectorServicer:
+class AnomalyDetectorServicer(object):
     """Missing associated documentation comment in .proto file."""
 
     def StreamMetrics(self, request_iterator, context):
@@ -66,13 +66,13 @@ def add_AnomalyDetectorServicer_to_server(servicer, server):
     rpc_method_handlers = {
             'StreamMetrics': grpc.stream_stream_rpc_method_handler(
                     servicer.StreamMetrics,
-                    request_deserializer=protobuf_dot_telemetry__pb2.MetricPayload.FromString,
-                    response_serializer=protobuf_dot_telemetry__pb2.AnomalyResponse.SerializeToString,
+                    request_deserializer=telemetry__pb2.MetricPayload.FromString,
+                    response_serializer=telemetry__pb2.AnomalyResponse.SerializeToString,
             ),
             'AnalyzeLog': grpc.stream_stream_rpc_method_handler(
                     servicer.AnalyzeLog,
-                    request_deserializer=protobuf_dot_telemetry__pb2.LogPayload.FromString,
-                    response_serializer=protobuf_dot_telemetry__pb2.MetricPayload.SerializeToString,
+                    request_deserializer=telemetry__pb2.LogPayload.FromString,
+                    response_serializer=telemetry__pb2.AnomalyResponse.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -82,7 +82,7 @@ def add_AnomalyDetectorServicer_to_server(servicer, server):
 
 
  # This class is part of an EXPERIMENTAL API.
-class AnomalyDetector:
+class AnomalyDetector(object):
     """Missing associated documentation comment in .proto file."""
 
     @staticmethod
@@ -100,8 +100,8 @@ class AnomalyDetector:
             request_iterator,
             target,
             '/telemetry.AnomalyDetector/StreamMetrics',
-            protobuf_dot_telemetry__pb2.MetricPayload.SerializeToString,
-            protobuf_dot_telemetry__pb2.AnomalyResponse.FromString,
+            telemetry__pb2.MetricPayload.SerializeToString,
+            telemetry__pb2.AnomalyResponse.FromString,
             options,
             channel_credentials,
             insecure,
@@ -127,8 +127,8 @@ class AnomalyDetector:
             request_iterator,
             target,
             '/telemetry.AnomalyDetector/AnalyzeLog',
-            protobuf_dot_telemetry__pb2.LogPayload.SerializeToString,
-            protobuf_dot_telemetry__pb2.MetricPayload.FromString,
+            telemetry__pb2.LogPayload.SerializeToString,
+            telemetry__pb2.AnomalyResponse.FromString,
             options,
             channel_credentials,
             insecure,

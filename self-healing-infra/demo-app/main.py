@@ -66,11 +66,11 @@ async def heavly_query() -> dict:
         if n == 1: return 1
         return fibonacci(n-1) + fibonacci(n-2)
         
-    result = fibonacci(10)
+    result = fibonacci(30)
 
     # Measure total CPU usage across system or current process
-    process_cpu = process.cpu_percent(interval=None)
-    system_cpu = psutil.cpu_percent(interval=None)
+    process_cpu = process.cpu_percent(interval=0.1)
+    system_cpu = psutil.cpu_percent(interval=0.1)
 
     logger.info(f"Process CPU Usage: {process_cpu}% | Overall System CPU: {system_cpu}%")
 
