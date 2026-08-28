@@ -1,7 +1,8 @@
 import os
+import time
 import psutil
 import logging
-from fastapi import FastAPI
+from fastapi import FastAPI, concurrency
 from contextlib import asynccontextmanager
 
 # Initialize logging config before creating loggers
@@ -51,6 +52,10 @@ async def get_leak_memory() -> dict:
     }
     
 
+def fibonacci(n):
+        if n <= 0: return 0
+        if n == 1: return 1
+        return fibonacci(n-1) + fibonacci(n-2)
 
 # endpoint of heavly CPU Computing
 @app.get("/slow-query")
@@ -58,20 +63,25 @@ async def heavly_query() -> dict:
     logger.info("Initiating highly intensive CPU-bound Computation Pipeline")
 
     process = psutil.Process()
-    # Call cpu_percent once to set a baseline measurement point
-    process.cpu_percent(interval=None)
+    
+    # Capture CPU timing before workload
+    start_time = time.perf_counter()
+    start_cpu_time = process.cpu_times()
 
-    def fibonacci(n):
-        if n <= 0: return 0
-        if n == 1: return 1
-        return fibonacci(n-1) + fibonacci(n-2)
-        
-    result = fibonacci(30)
+    # Offload CPU task so FastAPI event loop remains responsive
+    # Use n=35 so it actually takes noticeable CPU work (~1-2 seconds)
+    result = await concurrency.run_in_threadpool(fibonacci, 20)
 
-    # Measure total CPU usage across system or current process
-    process_cpu = process.cpu_percent(interval=0.1)
-    system_cpu = psutil.cpu_percent(interval=0.1)
+    # Calculate CPU utilization during the work execution
+    elapsed_time = time.perf_counter() - start_time
+    end_cpu_time = process.cpu_times()
 
-    logger.info(f"Process CPU Usage: {process_cpu}% | Overall System CPU: {system_cpu}%")
+    user_sys_time = (end_cpu_time.user - start_cpu_time.user) + (end_cpu_time.system - start_cpu_time.system)
+    
+    # Process CPU usage percentage over the duration of the workload
+    process_cpu = (user_sys_time / elapsed_time) * 100 if elapsed_time > 0 else 0.0
+    system_cpu = psutil.cpu_percent(interval=None)
+
+    logger.info(f"Process CPU Usage: {process_cpu:.1f}% | Overall System CPU: {system_cpu}%")
 
     return {"result": result}
