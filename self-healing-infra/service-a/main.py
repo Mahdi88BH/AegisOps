@@ -1,6 +1,8 @@
+import gzip
+import json
 import logging
 from typing import Any, Dict, List, Optional
-from fastapi import FastAPI, Request, status
+from fastapi import FastAPI, Request, status, HTTPException
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("service-a")
@@ -8,7 +10,7 @@ logger = logging.getLogger("service-a")
 app = FastAPI(title="Service-A Ingestion Mesh")
 
 
-def parse_otel_metrics(payload : Dict[str: Any]) -> List[Dict[str, Any]]:
+def parse_otel_metrics(payload : Dict[str, Any]) -> List[Dict[str, Any]]:
 
     extracted_metrics = []
 
@@ -53,7 +55,21 @@ def parse_otel_metrics(payload : Dict[str: Any]) -> List[Dict[str, Any]]:
 @app.post("/v1/metrics", status_code=status.HTTP_200_OK)
 async def receive_metrics(request: Request) -> Dict[str, Any]:
 
-    payload = await request.json()
+    body = await request.body()
+    
+    # Check Content-Encoding header or attempt decompression
+    if request.headers.get("content-encoding") == "gzip" or body.startswith(b'\x1f\x8b'):
+        try:
+            body = gzip.decompress(body)
+        except Exception:
+            raise HTTPException(status_code=400, detail="Invalid gzip payload")
+
+    try:
+        payload = json.loads(body.decode("utf-8"))
+    except (UnicodeDecodeError, json.JSONDecodeError):
+        raise HTTPException(status_code=400, detail="Invalid UTF-8 JSON payload")
+
+    # payload = await request.json()
     parsed_data = parse_otel_metrics(payload)
 
     # Process and print flattened CPU & RAM metrics

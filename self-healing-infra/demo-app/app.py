@@ -100,7 +100,7 @@ async def heavly_query() -> dict:
     logger.info(f"Process CPU Usage: {process_cpu:.1f}% | Overall System CPU: {system_cpu}%")
 
     # Set Scraper Metric
-    RAM_Usage.set(system_cpu, {"endpoint": "/slow-query"})
+    CPU_Usage.set(system_cpu, {"endpoint": "/slow-query"})
 
     # Return Process CPU utilization
     return {"CPU": system_cpu}

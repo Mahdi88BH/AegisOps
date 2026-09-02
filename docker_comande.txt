@@ -1,0 +1,41 @@
+docker network create otel-net
+
+docker image build -t "name_image" .
+
+
+docker run -d \
+  -p 8000:8000 \
+  --name demo-app \
+  --network otel-net \
+  --cpus="1.0" \
+  --memory="2g" \
+  demo-app
+
+
+docker run -d \
+  -p 5000:5000 \
+  --name service-a \
+  --network otel-net \
+  --cpus="1.0" \
+  --memory="4g" \
+  service-a
+
+docker run -d \
+  -p 5000:5000 \
+  --name service-a \
+  --network otel-net \
+  service-a
+
+
+
+
+docker run -d \
+  --name otel-collector \
+  --network otel-net \
+  -v $(pwd)/otel-collector-config.yaml:/etc/otelcol-contrib/config.yaml \
+  -p 4317:4317 \
+  -p 4318:4318 \
+  otel/opentelemetry-collector-contrib:latest
+
+docker logs -f service-a
+docker logs -f otel-collector
