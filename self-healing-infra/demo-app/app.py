@@ -11,6 +11,9 @@ from contextlib import asynccontextmanager
 # Initialize custom logging configuration before creating individual loggers
 import logging_config
 
+#
+from opentelemetry_config import CPU_Usage, RAM_Usage
+
 # Create a module-level logger using the current module's name
 logger = logging.getLogger(__name__)
 
@@ -58,6 +61,9 @@ async def get_leak_memory() -> dict:
     update_rss_mb = process_monitore.memory_info().rss / (1024 ** 2)
     logger.debug("Memory leakage progression Tracked | Update RMA Value: %.2f MD", update_rss_mb)
 
+    # Set Scraper Metric
+    RAM_Usage.set(update_rss_mb, {"endpoint": "/leak"})
+
     # Return updated RAM usage in Megabytes
     return {
         "RAM": round(update_rss_mb, 2)
@@ -93,5 +99,8 @@ async def heavly_query() -> dict:
 
     logger.info(f"Process CPU Usage: {process_cpu:.1f}% | Overall System CPU: {system_cpu}%")
 
+    # Set Scraper Metric
+    RAM_Usage.set(system_cpu, {"endpoint": "/slow-query"})
+
     # Return Process CPU utilization
-    return {"CPU": process_cpu}
+    return {"CPU": system_cpu}
