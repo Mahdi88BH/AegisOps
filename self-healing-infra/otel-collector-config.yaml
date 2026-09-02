@@ -1,0 +1,39 @@
+receivers:
+  # 1. Receivers the OTLP Metrics pushed from The FastAPI application via grpc
+  otlp:
+    protocols:
+      grpc: 
+        0.0.0.0:4317
+      http:
+        0.0.0.0:4317
+  
+  # 2. Automatically collect underlying Metric System (RAm, CPU)
+  hostmetrics:
+    collection_interval: 2s
+    scrapers:
+      cpu:
+      memory:
+
+processors:
+  # Batches the metric data befor exportinf to optimaze the network usage
+  batch:
+    send_batch_max_size: 1000
+    timeout: 5s
+
+exporters:
+  # Print the detailed metric outputs to sdtout
+  debug:
+    verbosity: detailed
+  
+  # Expose metrics endpoint on port 5000 for service-A (Ingestion Mesh)
+  prometheus:
+    endpoint: http://service-a:5000/v1/metrics
+    namespace: "Service-A"
+
+
+service:
+  pipelines:
+    metrics:
+      receivers: [otlp, hostmetrics]
+      processors: [batch]
+      exporters: [debug, prometheus]
